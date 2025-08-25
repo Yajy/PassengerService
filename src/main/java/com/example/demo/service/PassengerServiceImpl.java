@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PassengerServiceImpl implements PassengerService {
+
+    private final PassengerRepository passengerRepository;
+
     @Autowired
-    private PassengerRepository passengerRepository;
+    public PassengerServiceImpl(PassengerRepository passengerRepository) {
+        this.passengerRepository = passengerRepository;
+    }
 
     @Override
     public Passenger createPassenger(Passenger passenger) {

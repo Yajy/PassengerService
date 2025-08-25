@@ -19,6 +19,7 @@
 		<protobuf.version>3.24.0</protobuf.version>
 		<grpc.version>1.58.0</grpc.version>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+		<os.detected.classifier>windows-x86_64</os.detected.classifier>
 	</properties>
 
 	<dependencies>
@@ -117,6 +118,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 
 			<!-- Protobuf / gRPC -->
@@ -126,11 +135,10 @@
 				<version>0.6.1</version>
 				<configuration>
 					<!--suppress UnresolvedMavenProperty -->
-					<protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
+					<protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
 					<pluginId>grpc-java</pluginId>
 					<!--suppress UnresolvedMavenProperty -->
 					<pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
-					<protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
 				</configuration>
 				<executions>
 					<execution>
