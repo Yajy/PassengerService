@@ -6,9 +6,6 @@ import com.example.demo.exception.PassengerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.UUID;
-
 @Service
 public class PassengerServiceImpl implements PassengerService {
     @Autowired
@@ -22,15 +19,6 @@ public class PassengerServiceImpl implements PassengerService {
         return passengerRepository.save(passenger);
     }
 
-    @Override
-    public Optional<Passenger> getPassengerById(UUID id) {
-        return passengerRepository.findById(id);
-    }
-
-    @Override
-    public Optional<Passenger> getPassengerByEmail(String email) {
-        return passengerRepository.findByEmail(email);
-    }
 
     @Override
     public Passenger authenticatePassenger(String email, String password) {

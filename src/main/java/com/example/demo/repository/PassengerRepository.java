@@ -8,5 +8,4 @@ import java.util.UUID;
 
 public interface PassengerRepository extends JpaRepository<Passenger, UUID> {
     Optional<Passenger> findByEmail(String email);
-    boolean existsByEmail(String email);
 }

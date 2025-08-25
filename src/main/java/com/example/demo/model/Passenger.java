@@ -30,5 +30,5 @@ public class Passenger {
     private int age;
 
     @Column(columnDefinition = "integer default 0")
-    private int status;
+    private int status;  // 0 = logged Out, 1 = logged in
 }
