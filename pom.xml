@@ -143,6 +143,7 @@
 				<version>0.6.1</version>
 				<configuration>
 					<!--suppress UnresolvedMavenProperty -->
+					<protoSourceRoot>${project.basedir}/protos/protos-contracts/passenger</protoSourceRoot>
 					<protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
 					<pluginId>grpc-java</pluginId>
 					<!--suppress UnresolvedMavenProperty -->
