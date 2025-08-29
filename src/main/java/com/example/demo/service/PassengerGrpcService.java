@@ -6,7 +6,6 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import net.devh.boot.grpc.server.service.GrpcService;
 
-// Generated gRPC classes
 import com.example.demo.grpc.PassengerServiceGrpc;
 import com.example.demo.grpc.CreatePassengerRequest;
 import com.example.demo.grpc.CreatePassengerResponse;
@@ -35,7 +34,7 @@ public class PassengerGrpcService extends PassengerServiceGrpc.PassengerServiceI
                     .password(request.getPassword())
                     .address(request.getAddress())
                     .age(request.getAge())
-                    .status(0)  // default status for new passenger
+                    .status(0)
                     .build();
 
             passengerService.createPassenger(passenger);

@@ -38,13 +38,17 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public boolean logout(String email) {
+
         return passengerRepository.findByEmail(email)
-            .map(passenger -> {
-                passenger.setStatus(0); //updating status to 0 (logged out)
-                passengerRepository.save(passenger);
-                return true;
-            })
-            .orElse(false);
+                .map(passenger -> {
+                    if (passenger.getStatus() == 0) {
+                        throw new PassengerException("Passenger is already logged out");
+                    }
+                    passenger.setStatus(0);
+                    passengerRepository.save(passenger);
+                    return true;
+                }).orElse(false);
     }
+
 
 }
