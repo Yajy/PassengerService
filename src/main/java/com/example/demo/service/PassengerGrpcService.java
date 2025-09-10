@@ -3,17 +3,19 @@ package com.example.demo.service;
 import com.example.demo.exception.PassengerException;
 import com.example.demo.model.Passenger;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import net.devh.boot.grpc.server.service.GrpcService;
 
-import com.example.demo.grpc.PassengerServiceGrpc;
-import com.example.demo.grpc.CreatePassengerRequest;
-import com.example.demo.grpc.CreatePassengerResponse;
-import com.example.demo.grpc.AuthenticatePassengerRequest;
-import com.example.demo.grpc.AuthenticatePassengerResponse;
-import com.example.demo.grpc.LogoutRequest;
-import com.example.demo.grpc.LogoutResponse;
+import com.example.passenger.v1.grpc.PassengerServiceGrpc;
+import com.example.passenger.v1.grpc.CreatePassengerRequest;
+import com.example.passenger.v1.grpc.CreatePassengerResponse;
+import com.example.passenger.v1.grpc.AuthenticatePassengerRequest;
+import com.example.passenger.v1.grpc.AuthenticatePassengerResponse;
+import com.example.passenger.v1.grpc.LogoutRequest;
+import com.example.passenger.v1.grpc.LogoutResponse;
 
+@Slf4j
 @GrpcService
 public class PassengerGrpcService extends PassengerServiceGrpc.PassengerServiceImplBase {
 
@@ -37,11 +39,15 @@ public class PassengerGrpcService extends PassengerServiceGrpc.PassengerServiceI
                     .status(0)
                     .build();
 
-            passengerService.createPassenger(passenger);
+            Passenger savedPassenger = passengerService.createPassenger(passenger);
 
             CreatePassengerResponse response = CreatePassengerResponse.newBuilder()
                     .setSuccess(true)
+                    .setId(savedPassenger.getId())
                     .build();
+            log.info("Passenger created with ID: {}", savedPassenger.getId());
+
+
 
             responseObserver.onNext(response);
             responseObserver.onCompleted();

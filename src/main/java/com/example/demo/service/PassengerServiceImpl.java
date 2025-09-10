@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.helper.PasswordManager;
 import com.example.demo.model.Passenger;
 import com.example.demo.repository.PassengerRepository;
 import com.example.demo.exception.PassengerException;
@@ -21,14 +22,18 @@ public class PassengerServiceImpl implements PassengerService {
         if (passengerRepository.findByEmail(passenger.getEmail()).isPresent()) {
             throw new PassengerException("Email already exists");
         }
+
+        String hashedPassword = PasswordManager.hashPassword(passenger.getPassword(),passenger.getEmail());
+        passenger.setPassword(hashedPassword);
         return passengerRepository.save(passenger);
     }
 
 
     @Override
     public Passenger authenticatePassenger(String email, String password) {
+        String hashedPassword = PasswordManager.hashPassword(password,email);
         Passenger passenger = passengerRepository.findByEmail(email)
-            .filter(p -> p.getPassword().equals(password))
+            .filter(p -> p.getPassword().equals(hashedPassword))
             .orElseThrow(() -> new PassengerException("Invalid email or password"));
 
         // Update status to 1 (logged in)
