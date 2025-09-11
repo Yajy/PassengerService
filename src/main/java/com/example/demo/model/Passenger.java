@@ -16,8 +16,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Passenger {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @Column(length = 36)
+    private String id;
 
     private String name;
     private String phone;
@@ -31,4 +31,11 @@ public class Passenger {
 
     @Column(columnDefinition = "integer default 0")
     private int status;  // 0 = logged Out, 1 = logged in
+
+    @PrePersist
+    public void generateId() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
 }
